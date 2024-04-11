@@ -13,12 +13,8 @@ import re
 
 
 def filter_datum(fields, redaction, message, separator):
-    """Obfuscates specified fields in the log message with
-       the specified redaction.
-    """
-    obfuscated = message
+    """Obfuscates specified fields in the log message"""
     for field in fields:
-        obfuscated = re.sub(
-            rf'{field}=[^{separator}]+', f'{field}={redaction}', obfuscated)
-
-    return obfuscated
+        message = re.sub(
+            rf'{field}=[^{separator}]+', f'{field}={redaction}', message)
+    return message
