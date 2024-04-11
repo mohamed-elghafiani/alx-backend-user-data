@@ -9,6 +9,12 @@
        Obfuscates specified fields in the log message with
        the specified redaction.
 
+     get_logger():
+       returns a logging.Logger object
+
+     get_db():
+       returns a connector to the database
+
    Classes:
      RedactingFormatter(logging.Formatter):
        Redacting Formatter class
@@ -16,6 +22,8 @@
 import re
 from typing import List
 import logging
+import mysql.connector
+import os
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
@@ -65,3 +73,21 @@ class RedactingFormatter(logging.Formatter):
         )
         record.msg = obfuscated_msg
         return super().format(record)
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """returns a connector to the database
+    """
+    username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    database = os.getenv("PERSONAL_DATA_DB_NAME")
+
+    connection = mysql.connector.connect(
+        username=username,
+        password=password,
+        host=host,
+        database=database
+    )
+
+    return connection
