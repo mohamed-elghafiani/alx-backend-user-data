@@ -22,7 +22,6 @@
 import re
 from typing import List
 import logging
-from logging import StreamHandler
 import mysql.connector
 import os
 
@@ -46,11 +45,10 @@ def get_logger() -> logging.Logger:
     logger.setLevel(logging.INFO)
     logger.propagate = False
 
-    stream_handler = StreamHandler()
+    stream_handler = logging.StreamHandler()
     formatter = RedactingFormatter(PII_FIELDS)
 
     stream_handler.setFormatter(formatter)
-    stream_handler.setStream(stream_handler)
     logger.addHandler(stream_handler)
 
     return logger
@@ -93,3 +91,22 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
 
     return connection
+
+
+def main():
+    """Read and filter data
+    """
+    logger = get_logger()
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    fields = cursor.column_names
+    for row in cursor:
+        msg = "".join(["{}={};".format(f, v) for (f, v) in zip(fields, row)])
+        logger.info(msg)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
