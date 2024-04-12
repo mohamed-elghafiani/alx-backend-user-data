@@ -22,6 +22,7 @@
 import re
 from typing import List
 import logging
+from logging import StreamHandler
 import mysql.connector
 import os
 
@@ -49,7 +50,7 @@ def get_logger() -> logging.Logger:
     formatter = RedactingFormatter(PII_FIELDS)
 
     stream_handler.setFormatter(formatter)
-    logger.StreamHandler(stream=stream_handler)
+    logger.addHandler(stream_handler)
 
     return logger
 
