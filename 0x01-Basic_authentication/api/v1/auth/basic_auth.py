@@ -88,8 +88,11 @@ class BasicAuth(Auth):
             return None
         if any([user_pwd is None, not isinstance(user_pwd, str)]):
             return None
+        try:
+            users = User.search({"email": user_email})
+        except KeyError:
+            return None
 
-        users = User.search({"email": user_email})
         if len(users) == 0:
             return None
         user = users[0]
