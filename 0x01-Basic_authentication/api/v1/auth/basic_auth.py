@@ -16,7 +16,7 @@ class BasicAuth(Auth):
            Returns:
            - None if authorization_header is None
            - None if authorization_header is not a string
-           - None if authorization_header doesn’t start by Basic (with a space at the end)
+           - None if authorization_header doesn’t start by Basic
            - Otherwise, return the value after Basic (after the space)
         """
         if authorization_header is None:
