@@ -1,24 +1,42 @@
-# 0x01. Basic authentication
-### `Back-end` `Authentification`
+# Simple API
+
+Simple HTTP API for playing with `User` model.
 
 
-## Background Context
-In this project, you will learn what the authentication process means and implement a **Basic Authentication** on a simple API.
+## Files
 
-In the industry, you should **not** implement your own Basic authentication system and use a module or framework that doing it for you (like in Python-Flask: [Flask-HTTPAuth](https://flask-httpauth.readthedocs.io/en/latest/)). Here, for the learning purpose, we will walk through each step of this mechanism to understand it by doing.
+### `models/`
 
-![Image](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2020/5/6ccb363443a8f301bc2bc38d7a08e9650117de7c.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240417%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240417T103918Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=1aed04571a55488ca07058f9c62558fd21e824fa6a73b10d6a14979a16116c53)
+- `base.py`: base of all models of the API - handle serialization to file
+- `user.py`: user model
 
-## Resources
-* [REST API Authentication Mechanisms](https://www.youtube.com/watch?v=501dpx2IjGY)
-* [Base64 in Python](https://docs.python.org/3.7/library/base64.html)
-* [HTTP header Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
-* [Flask](https://palletsprojects.com/p/flask/)
-* [Base64 - concept](https://en.wikipedia.org/wiki/Base64)
+### `api/v1`
 
-## Learning Objectives
-* What authentication means
-* What Base64 is
-* How to encode a string in Base64
-* What Basic authentication means
-* How to send the Authorization header
+- `app.py`: entry point of the API
+- `views/index.py`: basic endpoints of the API: `/status` and `/stats`
+- `views/users.py`: all users endpoints
+
+
+## Setup
+
+```
+$ pip3 install -r requirements.txt
+```
+
+
+## Run
+
+```
+$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
+```
+
+
+## Routes
+
+- `GET /api/v1/status`: returns the status of the API
+- `GET /api/v1/stats`: returns some stats of the API
+- `GET /api/v1/users`: returns the list of users
+- `GET /api/v1/users/:id`: returns an user based on the ID
+- `DELETE /api/v1/users/:id`: deletes an user based on the ID
+- `POST /api/v1/users`: creates a new user (JSON parameters: `email`, `password`, `last_name` (optional) and `first_name` (optional))
+- `PUT /api/v1/users/:id`: updates an user based on the ID (JSON parameters: `last_name` and `first_name`)
