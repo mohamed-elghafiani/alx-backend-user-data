@@ -29,9 +29,16 @@ class Auth:
             return True
 
     def authorization_header(self, request=None) -> str:
-        """Public Method
+        """validate all requests to secure the API
+        - If request is None, returns None
+        - If request doesn’t contain the header key Authorization, returns None
+        - Otherwise, return the value of the header request Authorization
         """
-        return None
+        if not request:
+            return None
+        if not request.headers['Authorization']:
+            return None
+        return request.headers['Authorization']
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Public method
