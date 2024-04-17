@@ -24,9 +24,9 @@ class Auth:
             path += '/'
 
         if path in excluded_paths:
-            return True
-        else:
             return False
+        else:
+            return True
 
     def authorization_header(self, request=None) -> str:
         """Public Method
