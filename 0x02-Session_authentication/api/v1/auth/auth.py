@@ -4,6 +4,7 @@
 from flask import request
 from typing import List, TypeVar
 import fnmatch
+import os
 
 
 class Auth:
@@ -42,3 +43,11 @@ class Auth:
         """Public method
         """
         return None
+
+    def session_cookie(self, request=None):
+        """returns a cookie value from a request
+        """
+        if request is None:
+            return None
+        cookie_name = os.getenv("SESSION_NAME")
+        return request.cookies.get(cookie_name)
