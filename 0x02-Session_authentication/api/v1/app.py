@@ -24,7 +24,12 @@ elif auth_type == "session_auth":
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
 
-EXC_PATHS = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+EXC_PATHS = [
+    '/api/v1/status/',
+    '/api/v1/unauthorized/',
+    '/api/v1/forbidden/',
+    '/api/v1/auth_session/login/'
+]
 
 
 @app.before_request
@@ -35,6 +40,8 @@ def before_request():
         if not auth.require_auth(request.path, EXC_PATHS):
             return
         if auth.authorization_header(request) is None:
+            abort(401)
+        if auth.session_cookie(request) is None:
             abort(401)
         current_user = auth.current_user(request)
         if current_user is None:
