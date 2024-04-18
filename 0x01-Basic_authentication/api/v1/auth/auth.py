@@ -23,11 +23,10 @@ class Auth:
             return True
         if not path.endswith('/'):
             path += '/'
-
-        if fnmatch.fnmatch(path, excluded_path):
-            return False
-        else:
-            return True
+        for excluded_path in excluded_paths:
+            if fnmatch.fnmatch(path, excluded_path):
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """validate all requests to secure the API
