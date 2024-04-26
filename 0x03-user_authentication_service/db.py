@@ -49,9 +49,9 @@ class DB:
         _ = self._session
 
         try:
-           user = self.__session.query(User).filter_by(**kwarg).first()
-           if not user:
-               raise NoResultFound
-           return user
-       except InvalidRequestError as e:
-           raise e
+            user = self.__session.query(User).filter_by(**kwarg).first()
+            if not user:
+                raise NoResultFound
+            return user
+        except InvalidRequestError as e:
+            raise e
