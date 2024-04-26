@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-from typing import Any, Optional
+from typing import Any
 
 from user import Base, User
 
@@ -47,8 +47,6 @@ class DB:
         """returns the first row found in the users table as filtered
            by @args
         """
-        _ = self._session
-
         try:
             user = self.__session.query(User).filter_by(**kwarg).first()
             if not user:
