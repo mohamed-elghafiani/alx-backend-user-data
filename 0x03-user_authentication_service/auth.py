@@ -74,7 +74,7 @@ class Auth:
         except NoResultFound:
             return None
 
-     def destroy_session(self, user_id: int) -> None:
+    def destroy_session(self, user_id: int) -> None:
         """Takes a single user_id integer srgument
         Returns None
         """
