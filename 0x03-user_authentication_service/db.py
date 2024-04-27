@@ -55,7 +55,7 @@ class DB:
         except InvalidRequestError as e:
             raise e
 
-    def update_user(self, user_id: int, **kwargs: Any) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """Update the user’s attributes whose id is @user_id as passed in
            @kwargs then commit changes to the database
         """
