@@ -47,6 +47,7 @@ class DB:
         """returns the first row found in the users table as filtered
            by @args
         """
+        _ = self._session
         try:
             user = self.__session.query(User).filter_by(**kwarg).first()
             if not user:
