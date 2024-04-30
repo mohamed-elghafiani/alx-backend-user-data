@@ -54,15 +54,18 @@ class Auth:
             return False
 
     def create_session(self, email: str) -> str:
-        """add a session_id to user with @email
+        """Creates a new session for a user.
         """
+        user = None
         try:
             user = self._db.find_user_by(email=email)
-            session_id = _generate_uuid()
-            self._db.update_user(user.id, session_id=session_id)
-            return session_id
-        except (NoResultFound, InvalidRequestError):
+        except NoResultFound:
             return None
+        if user is None:
+            return None
+        session_id = _generate_uuid()
+        self._db.update_user(user.id, session_id=session_id)
+        return session_id
 
     def get_user_from_session_id(self, session_id: str) -> User:
         """Takes single session_id string argument
@@ -80,6 +83,7 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(id=user_id)
+            print(user.id)
             self._db.update_user(user.id, session_id=None)
         except NoResultFound:
             return None
